@@ -4,5 +4,9 @@ plugins {
 
 rootProject.name = "glue"
 
+// Core:
 include(":core")
 include(":ext-utils")
+
+// Minecraft:
+include(":adventure")
