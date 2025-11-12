@@ -1,4 +1,4 @@
-package dev.fruxz.ascend.tool.map
+package dev.fruxz.tool.map
 
 /**
  * This class represents a map of collections of type [C].

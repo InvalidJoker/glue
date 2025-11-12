@@ -1,7 +1,7 @@
-package dev.fruxz.ascend.tool.map.set
+package dev.fruxz.tool.map.set
 
-import dev.fruxz.ascend.tool.map.CollectionMap
-import dev.fruxz.ascend.tool.map.MutableCollectionMap
+import dev.fruxz.tool.map.CollectionMap
+import dev.fruxz.tool.map.MutableCollectionMap
 
 /**
  * This class represents a map of [Set]s.

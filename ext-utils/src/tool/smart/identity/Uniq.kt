@@ -1,4 +1,4 @@
-package dev.fruxz.ascend.tool.smart.identity
+package dev.fruxz.tool.smart.identity
 
 /**
  * An interface that marks an object, which can
