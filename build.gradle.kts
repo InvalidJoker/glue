@@ -3,85 +3,131 @@ import java.util.Calendar
 plugins {
     kotlin("jvm") version "2.2.21"
     kotlin("plugin.serialization") version "2.2.21"
-    id("org.jetbrains.dokka") version "2.1.0"
-    id("org.hildan.kotlin-publish") version "1.7.0"
-    id("ru.vyarus.github-info") version "2.0.0"
     `maven-publish`
 }
 
-val publishVersion = System.getenv("GH_RELEASE_VERSION")
-val calendar = Calendar.getInstance()
-
-version = publishVersion ?: "${calendar[Calendar.YEAR]}.${calendar[Calendar.MONTH] + 1}-dev"
-group = "dev.fruxz"
+// Taken from https://github.com/TheFruxz/Stacked/blob/develop/build.gradle.kts
+val publishVersion: String? = System.getenv("GH_RELEASE_VERSION")
+val calendar: Calendar = Calendar.getInstance()
+version = publishVersion ?: "${calendar[Calendar.YEAR]}.${calendar[Calendar.MONTH] + 1}-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven {
-        name = "fruxz.dev"
-        url = uri("https://nexus.fruxz.dev/repository/public/")
-    }
 }
 
-dependencies {
+subprojects {
+    apply(plugin = "kotlin")
+    apply(plugin = "kotlinx-serialization")
+    apply(plugin = "maven-publish")
+    apply(plugin = "java-library")
+    apply(plugin = "signing")
 
-    // Kotlin
-
-    testImplementation(kotlin("test"))
-
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-
-    implementation("org.jetbrains.exposed:exposed-core:1.0.0-rc-3")
-    implementation("org.jetbrains.exposed:exposed-dao:1.0.0-rc-3")
-    implementation("org.jetbrains.exposed:exposed-jdbc:1.0.0-rc-3")
-}
-
-github {
-    user = "TheFruxz"
-    license = "LGPLv3"
-}
-
-publishing {
+    group = "de.joker"
+    version = rootProject.version
 
     repositories {
-        mavenLocal()
-        maven("https://nexus.fruxz.dev/repository/releases/") {
-            name = "fruxz.dev"
-            credentials {
-                username = System.getenv("FXZ_NEXUS_USER")
-                password = System.getenv("FXZ_NEXUS_SECRET")
+        mavenCentral()
+    }
+
+    java {
+        toolchain {
+            sourceCompatibility = JavaVersion.VERSION_21
+            targetCompatibility = JavaVersion.VERSION_21
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
+
+    kotlin {
+        jvmToolchain(21)
+        sourceSets {
+            main {
+                kotlin.srcDirs("src")
+            }
+            test {
+                kotlin.srcDirs("test")
+            }
+        }
+    }
+
+    val skipPublish =
+        (findProperty("skip.publish") as String?)?.toBooleanStrictOrNull() == true
+
+    if (!skipPublish) {
+        publishing {
+            publications {
+                create<MavenPublication>("mavenJava") {
+                    from(components.findByName("java"))
+
+                    versionMapping {
+                        usage("java-api") {
+                            fromResolutionOf("runtimeClasspath")
+                        }
+                        usage("java-runtime") {
+                            fromResolutionResult()
+                        }
+                    }
+
+                    groupId = project.group.toString()
+                    artifactId = project.name
+                    version = project.version.toString()
+
+                    pom {
+                        name.set(project.name)
+                        description.set("The ${project.name} project provides various utilities and extensions")
+                        url.set("https://github.com/InvalidJoker/glue")
+                        licenses {
+                            license {
+                                name.set("GNU General Public License v3.0")
+                                url.set("https://www.gnu.org/licenses/gpl-3.0.html")
+                            }
+                        }
+                        developers {
+                            developer {
+                                id.set("invalidjoker")
+                                name.set("InvalidJoker")
+                            }
+                            developer {
+                                id.set("maxbossing")
+                                name.set("Max Bossing")
+                            }
+                            developer {
+                                id.set("fruxz")
+                                name.set("TheFruxz")
+                            }
+                        }
+                    }
+                }
+            }
+
+            repositories {
+                val repoUrl = if (project.version.toString().endsWith("SNAPSHOT")) {
+                    "https://central.sonatype.com/repository/maven-snapshots/"
+                } else {
+                    "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+                }
+                maven {
+                    name = "sonatype"
+                    url = uri(repoUrl)
+                    credentials {
+                        username = findProperty("sonatypeUsername") as String?
+                        password = findProperty("sonatypePassword") as String?
+                    }
+                }
             }
         }
 
+        configure<SigningExtension> {
+            sign(publishing.publications)
+        }
+    } else {
+        logger.lifecycle("Skipping publishing for project '${project.name}' because skip.publish=true")
     }
 
-}
-
-tasks {
-
-    compileKotlin {
-        compilerOptions {
-            freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
+    tasks {
+        compileKotlin {
+            compilerOptions {
+                freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
+            }
         }
     }
-
-    dokkaHtml.configure {
-        outputDirectory.set(layout.projectDirectory.dir("docs"))
-    }
-
-}
-
-sourceSets {
-    main {
-        kotlin.setSrcDirs(listOf("src"))
-    }
-    test {
-        kotlin.setSrcDirs(listOf("test"))
-    }
-}
-
-
-kotlin {
-    jvmToolchain(21)
 }
