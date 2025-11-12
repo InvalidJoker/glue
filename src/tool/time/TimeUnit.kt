@@ -19,19 +19,7 @@ interface TimeUnit {
         const val DAYS_IN_MONTH = 30
 
         val entries by lazy {
-            listOf(MILLISECOND, SECOND, MINUTE, HOUR, DAY, MONTH, YEAR, ERA)
-        }
-
-        @JvmStatic
-        val ERA = object : TimeUnit {
-            override val name: String = "ERA"
-            override val javaField: Int = JavaUtilCalendar.ERA
-            override val durationAccessor: (Duration) -> Long = { duration ->
-                duration.inWholeDays / 365 / 1000
-            }
-            override val milliseconds: Long = (365 * 1000).days.inWholeMilliseconds
-            override val digits: Int = 1
-            override fun toString() = name
+            listOf(MILLISECOND, SECOND, MINUTE, HOUR, DAY, MONTH, YEAR)
         }
 
         @JvmStatic

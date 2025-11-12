@@ -1,4 +1,4 @@
-package dev.fruxz.ascend.tool.math.decimal
+package dev.fruxz.ascend.tool.math
 
 /**
  * This object helps to easily calculate percentages in

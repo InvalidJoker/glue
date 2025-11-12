@@ -1,4 +1,4 @@
-package dev.fruxz.ascend.tool.result
+package dev.fruxz.ascend.tool.smart.result
 
 /**
  * A Rust-like discriminated union representing either a success value [Ok] or an error value [Err].

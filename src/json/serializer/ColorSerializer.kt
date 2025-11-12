@@ -4,11 +4,17 @@ import dev.fruxz.ascend.extension.Color
 import dev.fruxz.ascend.extension.hexString
 import kotlinx.serialization.ContextualSerializer
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.awt.Color
 import java.awt.Color as AwtColor
+
+/**
+ * Alias type for [AwtColor]s serialized with [ColorSerializer]
+ */
+typealias SerializableColor = @Serializable(ColorSerializer::class) AwtColor
 
 /**
  *  Serializes and deserializes `java.awt.Color` objects.

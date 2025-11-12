@@ -1,5 +1,7 @@
 package dev.fruxz.ascend.extension.math
 
+import dev.fruxz.ascend.tool.math.MathDivision
+import dev.fruxz.ascend.tool.math.MathDivision.greatestCommonDivisor
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
@@ -153,3 +155,12 @@ val Int.Companion.RANGE: IntRange by lazy { Int.MIN_VALUE..Int.MAX_VALUE }
  * @since 2023.1
  */
 val Long.Companion.RANGE: LongRange by lazy { Long.MIN_VALUE..Long.MAX_VALUE }
+
+/**
+ * Calculates the greatest common divisor (GCD) of a collection of integers.
+ * @see MathDivision.greatestCommonDivisor
+ * @author Fruxz
+ * @since 2025.7
+ */
+val Collection<Int>.greatestCommonDivisor: Int
+    get() = MathDivision.greatestCommonDivisor(this)

@@ -568,7 +568,7 @@ fun <T> Array<T>.toSortedSet(): SortedSet<T> =
  * returns the first entry.
  * So it is returning a random entry.
  * @param random custom randomizer
- * @throws NoSuchElementException if no [Collection.first] can be found (iterable empty)
+ * @throws NoSuchElementException if no [List.first] can be found (iterable empty)
  * @author Fruxz
  * @since 2023.4
  */

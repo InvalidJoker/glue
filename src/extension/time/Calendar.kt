@@ -2,7 +2,6 @@ package dev.fruxz.ascend.extension.time
 
 import dev.fruxz.ascend.tool.time.calendar.Calendar
 import dev.fruxz.ascend.tool.time.calendar.CalendarRange
-import dev.fruxz.ascend.tool.time.TimeUnit.Companion.ERA
 import dev.fruxz.ascend.tool.time.TimeUnit.Companion.HOUR
 import dev.fruxz.ascend.tool.time.TimeUnit.Companion.MILLISECOND
 import dev.fruxz.ascend.tool.time.TimeUnit.Companion.MINUTE
@@ -30,16 +29,6 @@ val JavaUtilCalendar.asAscendCalendar: Calendar
  * @since 2023.1
  */
 fun JavaUtilCalendar.editInAscendCalendar(action: Calendar.() -> Unit) = asAscendCalendar.apply(action).produce()
-
-/**
- * This value returns the value of the [Calendar.get] function
- * with the TimeUnit [ERA].
- * @return the value of the [Calendar.get] function with the TimeUnit [ERA].
- * @author Fruxz
- * @since 2023.1
- */
-val Calendar.era: Int
-	get() = get(ERA)
 
 /**
  * This value returns the value of the [Calendar.get] function

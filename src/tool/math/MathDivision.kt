@@ -1,4 +1,4 @@
-package dev.fruxz.ascend.tool.math.devision
+package dev.fruxz.ascend.tool.math
 
 object MathDivision {
 
