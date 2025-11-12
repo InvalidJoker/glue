@@ -258,3 +258,10 @@ fun String.joinArgumentChunks(chunkMarker: String = "\"", argumentSpliterator: S
 	if (current.isNotEmpty()) addAll((chunkMarker + current).split(" "))
 
 }
+
+/**
+ * This function returns the string, but with title case set.
+ * @return the string with title case
+ * @author InvalidJoker
+ */
+fun String.titleCase() = split(" ").joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } }
