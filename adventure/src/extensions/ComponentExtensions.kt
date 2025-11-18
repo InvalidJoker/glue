@@ -5,6 +5,7 @@ import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextReplacementConfig
 import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -126,3 +127,12 @@ fun Component.legacy() = LegacyComponentSerializer.legacy('§').serialize(this)
  * @since 0.0.1
  */
 fun Component.plain() = PlainTextComponentSerializer.plainText().serialize(this)
+
+/**
+ * Convert a [NamedTextColor] into a [Component] of that color
+ * @return A [Component] with the color of this [NamedTextColor]
+ * @author Max Bossing
+ * @since 0.0.1
+ */
+val NamedTextColor.component: Component
+    get() = Component.text("?").color(this).replaceLiteral("?", "")

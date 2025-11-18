@@ -1,4 +1,4 @@
-package dev.fruxz.tool.zip
+package dev.fruxz.ascend.tool.zip
 
 import java.io.File
 import java.io.FileInputStream

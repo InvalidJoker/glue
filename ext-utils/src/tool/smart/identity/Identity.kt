@@ -1,4 +1,4 @@
-package dev.fruxz.tool.smart.identity
+package dev.fruxz.ascend.tool.smart.identity
 
 import kotlinx.serialization.Serializable
 

@@ -1,0 +1,13 @@
+plugins {
+    kotlin("jvm")
+    kotlin("plugin.serialization")
+}
+
+dependencies {
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines)
+
+    compileOnly(libs.paper.api)
+
+    implementation(project(":core"))
+}

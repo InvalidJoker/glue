@@ -1,6 +1,6 @@
-package dev.fruxz.tool.map.list
+package dev.fruxz.ascend.tool.map.list
 
-import dev.fruxz.tool.map.MutableCollectionMap
+import dev.fruxz.ascend.tool.map.MutableCollectionMap
 
 /**
  * This class represents a mutable map of [List]s.

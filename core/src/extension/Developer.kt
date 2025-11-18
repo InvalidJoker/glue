@@ -128,3 +128,12 @@ inline fun <T> T?.ifNotNull(process: () -> Unit) = if (isNotNull) process() else
  * @since 2023.1
  */
 fun <T, D> Pair<T?, D>.asDefaultNullDodge() = first.isNull.switch(first, second)
+
+/**
+ * Returns true if this [T] is annotated with [Deprecated], otherwise false.
+ * @author InvalidJoker
+ */
+fun <T> T.isDeprecated(): Boolean {
+    val deprecatedAnnotation = this?.javaClass?.isAnnotationPresent(Deprecated::class.java)
+    return deprecatedAnnotation == true
+}

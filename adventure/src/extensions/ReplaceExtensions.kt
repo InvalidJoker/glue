@@ -8,7 +8,7 @@ import java.util.regex.Pattern
 /**
  * Replaces all occurrences of the given [key] with the given [value]
  * and then returns the result component.
- * @param key The key to replace.
+ * @param key The regex to replace.
  * @param value The value to replace the key with.
  * @return The result component.
  * @author Fruxz
@@ -17,6 +17,21 @@ import java.util.regex.Pattern
 fun <T : Component> T.replace(@RegExp key: String, value: String): Component =
     replaceText {
         it.match(key)
+        it.replacement(value)
+    }
+
+/**
+ * Replaces all occurrences of the given [key] with the given [value]
+ * and then returns the result component.
+ * @param key The key to replace.
+ * @param value The value to replace the key with.
+ * @return The result component.
+ * @author InvalidJoker
+ * @since 1.0
+ */
+fun <T : Component> T.replaceLiteral(key: String, value: String): Component =
+    replaceText {
+        it.matchLiteral(key)
         it.replacement(value)
     }
 

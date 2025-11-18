@@ -1,6 +1,6 @@
-package dev.fruxz.tool.map.list
+package dev.fruxz.ascend.tool.map.list
 
-import dev.fruxz.tool.map.CollectionMap
+import dev.fruxz.ascend.tool.map.CollectionMap
 
 /**
  * This class represents a map of [List]s.
