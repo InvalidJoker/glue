@@ -2,6 +2,7 @@ package de.joker.glue.paper.extensions
 
 import org.bukkit.Location
 import org.bukkit.World
+import org.bukkit.block.Block
 import org.bukkit.util.Vector
 
 /**
@@ -92,6 +93,16 @@ operator fun Vector.minus(vec: Vector) = clone().subtract(vec)
 
 operator fun Vector.times(vec: Vector) = clone().multiply(vec)
 operator fun Vector.times(num: Number) = clone().multiply(num.toDouble())
+
+operator fun Location.component1() = x
+operator fun Location.component2() = y
+operator fun Location.component3() = z
+operator fun Location.component4() = yaw
+operator fun Location.component5() = pitch
+
+operator fun Block.component1() = x
+operator fun Block.component2() = y
+operator fun Block.component3() = z
 
 operator fun Vector.plusAssign(vec: Vector) {
     add(vec)

@@ -10,4 +10,5 @@ dependencies {
     compileOnly(libs.paper.api)
 
     implementation(project(":core"))
+    api(project(":adventure"))
 }
