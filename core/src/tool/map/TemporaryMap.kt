@@ -1,27 +1,27 @@
 package dev.fruxz.ascend.tool.map
 
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
- * A mutable map that holds entries for a limited time. After the specified duration has passed since an entry was added,
- * it will no longer be accessible through the map.
+ * A mutable map that holds entries for a limited time. After the specified duration has passed
+ * since an entry was added, it will no longer be accessible through the map.
  *
  * @param K the type of keys maintained by this map
  * @param V the type of mapped values
- * @param persistenceDuration the duration (in milliseconds) for which an entry should persist in the map
+ * @param persistenceDuration how long an entry should remain accessible
  * @see MutableMap
  * @author InvalidJoker
  */
 class TemporaryMap<K, V>(
-    private val persistenceDuration: Long
+    private val persistenceDuration: Duration
 ) : MutableMap<K, V> {
-    constructor(persistenceDuration: Duration) : this(persistenceDuration.inWholeMilliseconds)
 
     private val backing = mutableMapOf<K, TemporaryValueWrapper<V>>()
 
     override fun get(key: K): V? {
         val wrapper = backing[key] ?: return null
-        return if (System.currentTimeMillis() - wrapper.persistedAt < persistenceDuration) {
+        return if ((System.currentTimeMillis() - wrapper.persistedAt).milliseconds < persistenceDuration) {
             wrapper.value
         } else {
             null
@@ -34,13 +34,13 @@ class TemporaryMap<K, V>(
         return old
     }
 
-    override fun remove(key: K): V? {
-        return backing.remove(key)?.value
-    }
+    override fun remove(key: K): V? =
+        backing.remove(key)?.value
 
     override fun putAll(from: Map<out K, V>) {
+        val now = System.currentTimeMillis()
         from.forEach { (key, value) ->
-            backing[key] = TemporaryValueWrapper(value, System.currentTimeMillis())
+            backing[key] = TemporaryValueWrapper(value, now)
         }
     }
 
@@ -67,8 +67,12 @@ class TemporaryMap<K, V>(
 
     override fun containsKey(key: K): Boolean = get(key) != null
 
-    override fun containsValue(value: V): Boolean =
-        backing.values.any { it.value == value && (System.currentTimeMillis() - it.persistedAt < persistenceDuration) }
+    override fun containsValue(value: V): Boolean {
+        val now = System.currentTimeMillis()
+        return backing.values.any {
+            it.value == value && (now - it.persistedAt).milliseconds < persistenceDuration
+        }
+    }
 
     data class TemporaryValueWrapper<V>(
         val value: V,
