@@ -31,6 +31,8 @@ subprojects {
     }
 
     java {
+        withSourcesJar()
+        withJavadocJar()
         toolchain {
             sourceCompatibility = JavaVersion.VERSION_21
             targetCompatibility = JavaVersion.VERSION_21
@@ -68,7 +70,7 @@ subprojects {
                         }
                     }
 
-                    groupId = project.group.toString()
+                    groupId = "dev.invalidjoker.glue"
                     artifactId = project.name
                     version = project.version.toString()
 
@@ -90,10 +92,6 @@ subprojects {
                             developer {
                                 id.set("maxbossing")
                                 name.set("Max Bossing")
-                            }
-                            developer {
-                                id.set("fruxz")
-                                name.set("TheFruxz")
                             }
                         }
                     }
