@@ -1,8 +1,16 @@
 package dev.fruxz.ascend.tool.store
 
+/**
+ * A utility object for accessing environment variables with support for custom suppliers.
+ *
+ * Custom suppliers can be added to provide environment variables from sources
+ * other than the system environment, such as dotenv files.
+ *
+ * @author InvalidJoker
+ */
 object Environment {
     private val env = System.getenv()
-    private val suppliers = mutableListOf<Map<String, String>>()
+    private val suppliers = mutableListOf<(String) -> String?>()
 
     /**
      * Adds a custom environment supplier (e.g., from a dotenv file or other source).
@@ -10,6 +18,15 @@ object Environment {
      * @param supplier A map containing key-value pairs for environment variables.
      */
     fun addSupplier(supplier: Map<String, String>) {
+        suppliers += { key: String -> supplier[key] }
+    }
+
+    /**
+     * Adds a custom environment supplier function.
+     *
+     * @param supplier A function that takes a key and returns the corresponding value or null.
+     */
+    fun addSupplier(supplier: (String) -> String?) {
         suppliers += supplier
     }
 
@@ -29,7 +46,10 @@ object Environment {
     fun getString(key: String): String? {
         // Try suppliers first (in reverse order: last added takes precedence)
         for (supplier in suppliers.asReversed()) {
-            supplier[key]?.let { return it }
+            val value = supplier(key)
+            if (value != null) {
+                return value
+            }
         }
 
         // Fallback to system environment
