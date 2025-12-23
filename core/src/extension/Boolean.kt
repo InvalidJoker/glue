@@ -12,3 +12,11 @@ fun <T> Boolean.switch(match: T, mismatch: T) = when {
     this -> match
     else -> mismatch
 }
+
+/**
+ * Converts the Boolean to an Int value.
+ * @return 1 if true, 0 if false
+ * @author InvalidJoker
+ */
+val Boolean.int: Int
+    get() = if (this) 1 else 0
