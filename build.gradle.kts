@@ -1,8 +1,8 @@
 import java.util.Calendar
 
 plugins {
-    kotlin("jvm") version "2.2.21"
-    kotlin("plugin.serialization") version "2.2.21"
+    kotlin("jvm") version "2.3.21"
+    kotlin("plugin.serialization") version "2.3.21"
     `maven-publish`
 }
 
@@ -20,7 +20,7 @@ subprojects {
     apply(plugin = "kotlinx-serialization")
     apply(plugin = "maven-publish")
     apply(plugin = "java-library")
-    apply(plugin = "signing")
+    //apply(plugin = "signing")
 
     group = "de.joker"
     version = rootProject.version
@@ -34,14 +34,14 @@ subprojects {
         withSourcesJar()
         withJavadocJar()
         toolchain {
-            sourceCompatibility = JavaVersion.VERSION_21
-            targetCompatibility = JavaVersion.VERSION_21
-            languageVersion.set(JavaLanguageVersion.of(21))
+            sourceCompatibility = JavaVersion.VERSION_25
+            targetCompatibility = JavaVersion.VERSION_25
+            languageVersion.set(JavaLanguageVersion.of(25))
         }
     }
 
     kotlin {
-        jvmToolchain(21)
+        jvmToolchain(25)
         sourceSets {
             main {
                 kotlin.srcDirs("src")
@@ -115,9 +115,9 @@ subprojects {
             }
         }
 
-        configure<SigningExtension> {
+        /*configure<SigningExtension> {
             sign(publishing.publications)
-        }
+        }*/
     } else {
         logger.lifecycle("Skipping publishing for project '${project.name}' because skip.publish=true")
     }

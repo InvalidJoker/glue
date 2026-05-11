@@ -38,6 +38,7 @@ open class DotEnvParser {
                     value = value.substring(1, value.length - 1)
                 }
 
+
                 values[key] = value
             }
         }
