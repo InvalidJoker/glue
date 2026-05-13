@@ -20,7 +20,6 @@ subprojects {
     apply(plugin = "kotlinx-serialization")
     apply(plugin = "maven-publish")
     apply(plugin = "java-library")
-    //apply(plugin = "signing")
 
     group = "de.joker"
     version = rootProject.version
@@ -100,24 +99,20 @@ subprojects {
 
             repositories {
                 val repoUrl = if (project.version.toString().endsWith("SNAPSHOT")) {
-                    "https://central.sonatype.com/repository/maven-snapshots/"
+                    "https://maven.invalidjoker.dev/snapshots"
                 } else {
-                    "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+                    "https://maven.invalidjoker.dev/releases"
                 }
                 maven {
-                    name = "sonatype"
+                    name = "invalidjoker.dev"
                     url = uri(repoUrl)
                     credentials {
-                        username = findProperty("sonatypeUsername") as String?
-                        password = findProperty("sonatypePassword") as String?
+                        username = System.getenv("JOKER_MAVEN_USER")
+                        password = System.getenv("JOKER_MAVEN_PASSWORD")
                     }
                 }
             }
         }
-
-        /*configure<SigningExtension> {
-            sign(publishing.publications)
-        }*/
     } else {
         logger.lifecycle("Skipping publishing for project '${project.name}' because skip.publish=true")
     }
