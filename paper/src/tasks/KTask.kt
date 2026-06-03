@@ -2,8 +2,11 @@ package de.joker.glue.paper.tasks
 
 import de.joker.glue.paper.PluginInstance
 import dev.fruxz.ascend.annotation.InternalGlueApi
+import dev.fruxz.ascend.extension.time.inWholeMinecraftTicks
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitRunnable
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Represents a [BukkitRunnable] with additional properties
@@ -37,8 +40,8 @@ abstract class KTask(
 @OptIn(InternalGlueApi::class)
 fun task(
     sync: Boolean = true,
-    delay: Long = 0,
-    period: Long? = 20,
+    delay: Duration = Duration.ZERO,
+    period: Duration? = 1.seconds,
     uses: Long? = null,
     safeCallback: Boolean = false,
     endCallback: (() -> Unit)? = null,
@@ -73,11 +76,11 @@ fun task(
     }.let { kTask ->
         endCallback?.let { KRunnableHolder.add(kTask, it, safeCallback) }
         period?.let {
-            if (sync) kTask.runTaskTimer(PluginInstance, delay, period)
+            if (sync) kTask.runTaskTimer(PluginInstance, delay.inWholeMinecraftTicks, period.inWholeMinecraftTicks)
             else kTask.runTaskTimerAsynchronously(
                 PluginInstance,
-                delay,
-                period
+                delay.inWholeMinecraftTicks,
+                period.inWholeMinecraftTicks
             )
         }
 
@@ -93,9 +96,9 @@ fun task(
  * @since 0.0.1
  * @author Jakob Kretzschmar (https://github.com/jakobkmar)
  */
-fun delayTask(delay: Long, sync: Boolean = true, task: () -> Unit) =
-    if (sync) Bukkit.getScheduler().runTaskLater(PluginInstance, task, delay)
-    else Bukkit.getScheduler().runTaskLaterAsynchronously(PluginInstance, task, delay)
+fun delayTask(delay: Duration, sync: Boolean = true, task: () -> Unit) =
+    if (sync) Bukkit.getScheduler().runTaskLater(PluginInstance, task, delay.inWholeMinecraftTicks)
+    else Bukkit.getScheduler().runTaskLaterAsynchronously(PluginInstance, task, delay.inWholeMinecraftTicks)
 
 /**
  * Starts a synchronous task.
