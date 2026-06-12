@@ -174,7 +174,7 @@ inline fun <reified T : Event> KListener<T>.register() {
     lifeTime
         .takeIf { it != Duration.INFINITE }
         ?.let {
-            this.task = delayTask(it.inWholeMilliseconds.coerceAtLeast(50) / 50) {
+            this.task = delayTask(it) {
                 this.unregister()
                 this.task = null
             }

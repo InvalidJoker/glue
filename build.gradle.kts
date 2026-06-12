@@ -99,17 +99,14 @@ subprojects {
 
             repositories {
                 val repoUrl = if (project.version.toString().endsWith("SNAPSHOT")) {
-                    "https://maven.invalidjoker.dev/snapshots"
+                    "https://repo.koder.wtf/snapshots"
                 } else {
-                    "https://maven.invalidjoker.dev/releases"
+                    "https://repo.koder.wtf/releases"
                 }
                 maven {
-                    name = "invalidjoker.dev"
+                    name = "joker"
                     url = uri(repoUrl)
-                    credentials {
-                        username = System.getenv("JOKER_MAVEN_USER")
-                        password = System.getenv("JOKER_MAVEN_PASSWORD")
-                    }
+                    credentials(PasswordCredentials::class)
                 }
             }
         }
