@@ -39,3 +39,17 @@ inline fun <T, E, M : MutableMap<T, E>> M.removeAll(condition: (key: T, value: E
 		this.remove(key)
 	}
 }
+
+/**
+ * Retrieves the element corresponding to [key] from this map if it already exists
+ * or creates it by calling [initializer] and saving the result to the map
+ */
+inline fun <K, E> MutableMap<K, E>.computeIfAbsent(key: K, initializer: () -> E): E {
+	val v1 = this[key]
+	if (v1 == null) {
+		val v2 = initializer()
+		this[key] = v2
+		return v2
+	}
+	return v1
+}

@@ -583,3 +583,8 @@ fun <T> Iterable<T>.random(random: Random = Random): T = this.shuffled(random = 
  * @since 2023.4
  */
 fun <T> Iterable<T>.randomOrNull(random: Random = Random): T? = this.shuffled(random = random).firstOrNull()
+
+/**
+ * Performs the given [action] on each element.
+ */
+inline fun <T> Iterable<T>.onEach(action: T.() -> Unit): Unit = forEach { it.action() }

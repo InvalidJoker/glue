@@ -166,3 +166,17 @@ inline fun <reified T> JsonElement.fromJsonElement(json: Json = globalJson) = js
  * @since 2023.1
  */
 inline fun <reified T> JsonElement.fromJsonElementOrNull(json: Json = globalJson) = tryOrNull { fromJsonElement<T>(json = json) }
+
+private val emptyJsonObject = JsonObject(emptyMap())
+
+/**
+ * Returns an empty [JsonObject] if this [JsonElement] is not a [JsonObject], otherwise returns this [JsonElement] as a [JsonObject].
+ * @author Fruxz
+ * @since 2023.1
+ */
+fun JsonElement.asJsonObjectOrEmpty() = this as? JsonObject ?: emptyJsonObject
+
+/**
+ * Returns an empty [JsonObject].
+ */
+public fun emptyJsonObject(): JsonObject = emptyJsonObject
