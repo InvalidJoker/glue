@@ -28,13 +28,13 @@ jobs:
         run: echo "VERSION=$(date -u +'%Y.%-m')-$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
       - name: Publish package
-        run: ./gradlew publish --stacktrace
+        run: |
+          ./gradlew publish \
+            -PjokerUsername="${{ secrets.JOKER_USERNAME }}" \
+            -PjokerPassword="${{ secrets.JOKER_PASSWORD }}" \
+            --stacktrace
         env:
-          FXZ_NEXUS_USER: ${{ secrets.FXZ_NEXUS_USER }}
-          FXZ_NEXUS_SECRET: ${{ secrets.FXZ_NEXUS_SECRET }}
           GH_RELEASE_VERSION: ${{ env.VERSION }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_USERNAME: ${{ github.actor }}
 
       - name: Create GitHub Release
         uses: elgohr/Github-Release-Action@v5
