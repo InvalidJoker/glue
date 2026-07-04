@@ -99,9 +99,9 @@ subprojects {
 
             repositories {
                 val repoUrl = if (project.version.toString().endsWith("SNAPSHOT")) {
-                    "https://repo.koder.wtf/snapshots"
+                    "https://repo.koder.wtf/maven/snapshots"
                 } else {
-                    "https://repo.koder.wtf/releases"
+                    "https://repo.koder.wtf/maven/releases"
                 }
                 maven {
                     name = "joker"
