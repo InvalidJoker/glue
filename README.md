@@ -5,7 +5,7 @@
 ```kt
 repositories {
     mavenCentral()
-    maven("https://repo.koder.wtf/snapshots")
+    maven("https://repo.koder.wtf/maven/snapshots")
 }
 
 dependencies {
