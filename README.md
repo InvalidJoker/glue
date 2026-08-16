@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     implementation("dev.invalidjoker.glue:core:2026.6-SNAPSHOT")
-    implementation("dev.invalidjoker.glue:paper:2026.6-SNAPSHOT")
+    implementation("dev.invalidjoker.glue:ext-utils:2026.6-SNAPSHOT")
      implementation("dev.invalidjoker.glue:adventure:2026.6-SNAPSHOT")
 }
 ```

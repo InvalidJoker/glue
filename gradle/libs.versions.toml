@@ -1,23 +1,15 @@
 [versions]
-kotlinx-datetime = "v0.8.0"
 kotlinx-serialization-json = "1.11.0"
 kotlinx-coroutines = "1.11.0"
 adventure = "4.26.1"
-paper-api = "26.1.2.build.+"
-luckperms = "5.5"
-logback = "1.5.21"
 
 [libraries]
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 adventure-api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
 adventure-text-minimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
 adventure-text-serializer-legacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure" }
 adventure-text-serializer-plain = { group = "net.kyori", name = "adventure-text-serializer-plain", version.ref = "adventure" }
-logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper-api" }
 
 [bundles]
-kotlinx-ecosystem = ["kotlinx-datetime", "kotlinx-serialization-json", "kotlinx-coroutines"]
 adventure = ["adventure-api", "adventure-text-minimessage", "adventure-text-serializer-legacy", "adventure-text-serializer-plain"]

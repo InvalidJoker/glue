@@ -10,4 +10,3 @@ include(":ext-utils")
 
 // Minecraft:
 include(":adventure")
-include(":paper")
