@@ -16,10 +16,9 @@ open class DotEnvParser {
     /**
      * Loads and parses the dotenv file at the specified path.
      *
-     * @param path The path to the dotenv file.
+     * @param file The dotenv file to load.
      */
-    fun load(path: String) {
-        val file = File(path)
+    fun load(file: File) {
         if (!file.exists() || !file.isFile) return
         file.useLines { lines ->
             lines.forEach { line ->
@@ -44,8 +43,16 @@ open class DotEnvParser {
         }
     }
 
+    fun load(path: String) {
+        load(File(path))
+    }
+
     fun load(vararg paths: String) {
         paths.forEach { load(it) }
+    }
+
+    fun load(vararg files: File) {
+        files.forEach { load(it) }
     }
 
     operator fun get(key: String): String? = values[key]
@@ -54,4 +61,12 @@ open class DotEnvParser {
         values.getOrDefault(key, default)
 
     fun asMap(): Map<String, String> = values.toMap()
+
+    companion object {
+        fun fromFile(path: String): DotEnvParser {
+            val parser = DotEnvParser()
+            parser.load(path)
+            return parser
+        }
+    }
 }
