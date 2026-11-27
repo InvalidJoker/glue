@@ -1,7 +1,7 @@
 [versions]
 kotlinx-serialization-json = "1.11.0"
 kotlinx-coroutines = "1.11.0"
-adventure = "4.26.1"
+adventure = "5.2.0"
 
 [libraries]
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
